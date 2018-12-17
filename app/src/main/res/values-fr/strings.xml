@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">app mobile</string>
+    <string name="activity_main_msg">Bienvenue</string>
+    <string name="activity_main_button">Editer</string>
+    <string name="activity_edit_editText">Nom</string>
+    <string name="activity_edit_valide">Valider</string>
+    <string name="activity_edit_label">Nom:</string>
+</resources>

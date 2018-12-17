@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">app mobile</string>
+    <string name="activity_main_msg">Welcome</string>
+    <string name="activity_main_button">Edit</string>
+    <string name="activity_edit_editText">Name</string>
+    <string name="activity_edit_valide">OK</string>
+    <string name="activity_edit_label">Name:</string>
+    <string name="activity_main_name" translatable="false">Toto</string>
+</resources>
