@@ -1,53 +1,68 @@
 package tp.application.faisandi.appmobile;
 
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
-    public final static int CODE_USERNAME = 1;
-    private TextView textViewmsg;
-    private TextView textViewName;
+import java.util.List;
+
+/**
+ * TODO: implement onclick
+ */
+public class MainActivity extends AppCompatActivity implements NameItemListener {
+
+    private RecyclerView recyclerView;
     private Button buttonEdit;
-    private final MainActivity mainActivity = this;
+    private ListNameAdapter listNameAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        listNameAdapter= new ListNameAdapter(this);
         initViews();
+        initList();
+    }
+
+    private void initList() {
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(listNameAdapter);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        List<String> nameList =DataManager.getInstance().getNameList();
+        listNameAdapter.updateData(nameList);
+
     }
 
     private void initViews() {
-        textViewmsg = findViewById(R.id.activity_main_msg);
-        textViewName = findViewById(R.id.activity_main_name);
+        recyclerView = findViewById(R.id.activity_main_recyclerView);
 
         buttonEdit = findViewById(R.id.activity_main_button);
-        buttonEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mainActivity, EditActivity.class);
-                startActivityForResult(intent, CODE_USERNAME);
-            }
+        buttonEdit.setOnClickListener(v -> {
+            Intent intent = new Intent(this, EditActivity.class);
+            startActivity(intent);
         });
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == CODE_USERNAME) {
-            if (resultCode == RESULT_OK && data.getExtras() != null) {
-                displayForm(data);
-            }
-        }
+    public void clickOnItem(String name) {
+        Toast.makeText(this, name,Toast.LENGTH_SHORT).show();
     }
 
-    private void displayForm(Intent data) {
-        String name = data.getStringExtra(EditActivity.KEY_USERNAME);
-        textViewName.setText(name);
+    @Override
+    public void clickOnCloss(String name) {
+        Toast.makeText(this,"Clic sur la croix de l'item: "+name,Toast.LENGTH_SHORT).show();
     }
 }
+
+

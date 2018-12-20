@@ -9,8 +9,6 @@ import android.widget.TextView;
 
 public class EditActivity extends AppCompatActivity {
 
-    public final static String KEY_USERNAME = "lastName";
-
     private Button buttonValide;
     private TextView editTextName;
 
@@ -21,19 +19,14 @@ public class EditActivity extends AppCompatActivity {
 
         editTextName = findViewById(R.id.activity_edit_editText);
         buttonValide = findViewById(R.id.activity_edit_valide);
-        buttonValide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveForm();
-            }
-        });
+        buttonValide.setOnClickListener(v -> save());
     }
 
-    private void saveForm() {
+    private void save() {
         String name = editTextName.getText().toString();
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra(KEY_USERNAME, name);
-        setResult(RESULT_OK, resultIntent);
+        if(!name.isEmpty()){
+            DataManager.getInstance().addName(name);
+        }
         finish();
     }
 
